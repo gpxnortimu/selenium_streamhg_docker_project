@@ -1,0 +1,7 @@
+docker build -t streamhg-app .
+docker run --rm  streamhg-app
+docker tag streamhg-app nduythanh1/stream-app:latest
+docker push nduythanh1/stream-app:latest
+
+docker tag streamhg-app streamhg/stream-app:v2
+docker push streamhg/stream-app:v2
