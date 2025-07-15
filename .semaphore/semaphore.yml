@@ -1,0 +1,23 @@
+version: v1.0
+name: Parallel Docker Jobs
+
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+
+blocks:
+  - name: Run Docker Jobs in Parallel
+    task:
+      jobs:
+        - name: Run Docker Job
+          commands:
+            - checkout
+            - chmod +x .semaphore/run_docker.sh
+            - |
+              RUN_IDS=(job1 job2 job3 job4 job5 job6 job7 job8 job9 job10 \
+                       job11 job12 job13 job14 job15 job16 job17 job18 job19 job20)
+              RUN_ID=${RUN_IDS[$SEMAPHORE_JOB_INDEX]}
+              echo "Running Docker for RUN_ID: $RUN_ID"
+              .semaphore/run_docker.sh "$RUN_ID"
+          parallelism: 20
